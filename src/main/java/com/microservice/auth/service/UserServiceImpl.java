@@ -38,14 +38,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private HttpServletRequest request;
 
     public UserDetails loadUserByUsername(String principalName) throws UsernameNotFoundException {
-        PrincipalEntity principalDetails = (PrincipalEntity) utils.stringToObject(principalName, PrincipalEntity.class);
-        String username = principalName;
-        if(principalDetails != null)
-            username = principalDetails.getUsername();
-
         User user = null;
         try{
-            user = userDao.getUserByUserName(username);
+            user = userDao.getUserByUserName(principalName);
         }catch (Exception e){
             LOGGER.error("Exception in loadUserByUsername DETAIL:"+e.getMessage(), e);
         }
@@ -58,7 +53,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         List<String> roles = new ArrayList<String>();
         roles.add(user.getType().name().toUpperCase());
         org.springframework.security.core.userdetails.User result = new org.springframework.security.core.userdetails.User(
-                new Gson().toJson(new PrincipalEntity(user.getId(), user.getUsername())),
+                user.getUsername(),
                 user.getPassword(),
                 getAuthority(roles));
         return result;

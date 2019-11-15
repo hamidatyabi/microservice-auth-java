@@ -54,12 +54,6 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
     @Override
     protected void additionalAuthenticationChecks(final UserDetails userDetails, final UsernamePasswordAuthenticationToken token)
             throws AuthenticationException {
-        String captcha = request.getParameter("captcha");
-        if(captcha == null){
-            throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                    "captcha code is empty"));
-        }
         if (token.getCredentials() == null || userDetails.getPassword() == null)
             throw new BadCredentialsException("Credentials may not be null.");
 
@@ -75,13 +69,6 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
 
     @Override
     protected UserDetails retrieveUser(final String username, final UsernamePasswordAuthenticationToken token) throws AuthenticationException {
-        String captcha = request.getParameter("captcha");
-        if(captcha == null){
-            throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                    "captcha code is empty"));
-        }
-
         return userDetailsService.loadUserByUsername(username);
     }
 
