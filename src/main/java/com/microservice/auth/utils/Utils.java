@@ -91,6 +91,15 @@ public class Utils {
         return Arrays.asList(array);
     }
 
+    public Set<String> stringToSet(String text){
+        text = text.replaceAll(";" , ",");
+        text = text.replaceAll(":" , ",");
+        text = text.replaceAll("@" , ",");
+        text = text.replaceAll("-" , ",");
+        String[] array = text.split(",");
+        return new HashSet<>(Arrays.asList(array));
+    }
+
     public String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {

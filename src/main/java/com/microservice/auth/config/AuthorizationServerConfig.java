@@ -9,6 +9,7 @@
 
 package com.microservice.auth.config;
 
+import com.microservice.auth.common.repository.ClientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,18 +42,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ClientDao clientDao;
+
     @Override
     public void configure (ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory ()
-                .withClient ("client")
-                .authorizedGrantTypes ("password", "authorization_code", "refresh_token")
-                .authorities ("ROLE_ADMINISTRATOR", "ROLE_USER")
-                .scopes ("read", "write")
-                .autoApprove (true)
-                .accessTokenValiditySeconds(3600)
-                .refreshTokenValiditySeconds(7200)
-                .resourceIds(ResourceServerConfig.RESOURCE_ID)
-                .secret(passwordEncoder.encode("123456"));
+        clients.withClientDetails(clientDao);
     }
 
     @Bean
