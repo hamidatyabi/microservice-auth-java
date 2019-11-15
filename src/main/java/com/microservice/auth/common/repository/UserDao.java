@@ -33,6 +33,7 @@ public class UserDao implements UserRepository{
     public User getUserById(Integer id) {
         User user = redisDao.get(RedisDao.USER_ID_PTR + id, User.class);
         if(user != null) return user;
+
         return jdbcTemplate.queryForObject(
                 QUERY_SELECT_USERS_BY_ID,
                 new Object[]{id},
@@ -51,9 +52,9 @@ public class UserDao implements UserRepository{
                                 rs.getDouble(User.CREDIT),
                                 rs.getBoolean(User.STATUS)
                         );
-                        redisDao.set(RedisDao.USER_ID_PTR + userObject.getId(), String.valueOf(userObject.getId()));
-                        redisDao.set(RedisDao.USER_USERNAME_PTR + userObject.getUsername(), userObject);
-                        redisDao.set(RedisDao.USER_EMAIL_PTR + userObject.getEmail(), userObject);
+                        redisDao.set(RedisDao.USER_ID_PTR + userObject.getId(), userObject);
+                        redisDao.set(RedisDao.USER_USERNAME_PTR + userObject.getUsername(), String.valueOf(userObject.getId()));
+                        redisDao.set(RedisDao.USER_EMAIL_PTR + userObject.getEmail(), String.valueOf(userObject.getId()));
                         return userObject;
                     }
                 }
@@ -63,6 +64,11 @@ public class UserDao implements UserRepository{
     private static final String QUERY_SELECT_USERS_BY_USERNAME = "SELECT users.* FROM users WHERE username = ? LIMIT 1";
     @Override
     public User getUserByUserName(String username) {
+        String userId = redisDao.get(RedisDao.USER_USERNAME_PTR + username);
+        if(userId != null) {
+            User user = redisDao.get(RedisDao.USER_ID_PTR + userId, User.class);
+            if(user != null) return user;
+        }
         return jdbcTemplate.queryForObject(
                 QUERY_SELECT_USERS_BY_USERNAME,
                 new Object[]{username},
@@ -81,9 +87,9 @@ public class UserDao implements UserRepository{
                                 rs.getDouble(User.CREDIT),
                                 rs.getBoolean(User.STATUS)
                         );
-                        redisDao.set(RedisDao.USER_ID_PTR + userObject.getId(), String.valueOf(userObject.getId()));
-                        redisDao.set(RedisDao.USER_USERNAME_PTR + userObject.getUsername(), userObject);
-                        redisDao.set(RedisDao.USER_EMAIL_PTR + userObject.getEmail(), userObject);
+                        redisDao.set(RedisDao.USER_ID_PTR + userObject.getId(), userObject);
+                        redisDao.set(RedisDao.USER_USERNAME_PTR + userObject.getUsername(), String.valueOf(userObject.getId()));
+                        redisDao.set(RedisDao.USER_EMAIL_PTR + userObject.getEmail(), String.valueOf(userObject.getId()));
                         return userObject;
                     }
                 }
@@ -93,6 +99,11 @@ public class UserDao implements UserRepository{
     private static final String QUERY_SELECT_USERS_BY_EMAIL = "SELECT users.* FROM users WHERE email = ? LIMIT 1";
     @Override
     public User getUserByEmail(String email) {
+        String userId = redisDao.get(RedisDao.USER_EMAIL_PTR + email);
+        if(userId != null) {
+            User user = redisDao.get(RedisDao.USER_ID_PTR + userId, User.class);
+            if(user != null) return user;
+        }
         return jdbcTemplate.queryForObject(
                 QUERY_SELECT_USERS_BY_EMAIL,
                 new Object[]{email},
@@ -111,9 +122,9 @@ public class UserDao implements UserRepository{
                                 rs.getDouble(User.CREDIT),
                                 rs.getBoolean(User.STATUS)
                         );
-                        redisDao.set(RedisDao.USER_ID_PTR + userObject.getId(), String.valueOf(userObject.getId()));
-                        redisDao.set(RedisDao.USER_USERNAME_PTR + userObject.getUsername(), userObject);
-                        redisDao.set(RedisDao.USER_EMAIL_PTR + userObject.getEmail(), userObject);
+                        redisDao.set(RedisDao.USER_ID_PTR + userObject.getId(), userObject);
+                        redisDao.set(RedisDao.USER_USERNAME_PTR + userObject.getUsername(), String.valueOf(userObject.getId()));
+                        redisDao.set(RedisDao.USER_EMAIL_PTR + userObject.getEmail(), String.valueOf(userObject.getId()));
                         return userObject;
                     }
                 }

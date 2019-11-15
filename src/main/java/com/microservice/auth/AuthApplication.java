@@ -38,7 +38,7 @@ public class AuthApplication {
 	CommandLineRunner init() {
 		return args -> {
 			LOGGER.info("Spring boot loaded successfully.");
-			LOGGER.info("User: "+userDao.getUserById(1));
+			LOGGER.info("User: "+userDao.getUserByUserName("admin"));
 			LOGGER.info("Client: "+clientDao.loadClientByClientId("client"));
 		};
 	}

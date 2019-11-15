@@ -82,12 +82,26 @@ public class RedisDao {
             final byte[] redisObj = jedis.get(key).getBytes();
             if (redisObj == null)
                 return null;
-
             return new Gson().fromJson(new String(redisObj), classOfT);
+        }catch (Exception e){
 
-        } finally {
+        }finally {
 
         }
+        return null;
+    }
+    public String get(String key){
+        try {
+            final byte[] redisObj = jedis.get(key).getBytes();
+            if (redisObj == null)
+                return null;
+            return new String(redisObj);
+        }catch (Exception e){
+
+        }finally {
+
+        }
+        return null;
     }
     public boolean set(String key, Object data){
         try {
