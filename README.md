@@ -1,6 +1,15 @@
 # microservice-auth-java
 Java spring boot authentication server
-
+# Technologies
+- Java 8
+- Spring boot latest version
+- Mysql for persisting data
+- Redis cluster for caching data
+- Spring boot oauth2
+# How to install?
+```
+$ docker-compose up -d
+```
 # How get token?
 you can get access_token and refresh_token by this endpoint
 ```
