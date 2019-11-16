@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Nov 15, 2019 at 07:05 PM
+-- Generation Time: Nov 16, 2019 at 11:29 AM
 -- Server version: 5.7.27
 -- PHP Version: 7.2.19
 
@@ -21,10 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `auth_server`
 --
-DROP DATABASE IF EXISTS `auth_server`;
-CREATE DATABASE IF NOT EXISTS `auth_server` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `auth_server`;
-
+USE auth_server;
 -- --------------------------------------------------------
 
 --

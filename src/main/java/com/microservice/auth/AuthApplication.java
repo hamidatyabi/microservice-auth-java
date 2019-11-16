@@ -12,6 +12,7 @@ import com.microservice.auth.common.repository.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,8 +39,9 @@ public class AuthApplication {
 	CommandLineRunner init() {
 		return args -> {
 			LOGGER.info("Spring boot loaded successfully.");
-			LOGGER.info("User: "+userDao.getUserByUserName("admin"));
 			LOGGER.info("Client: "+clientDao.loadClientByClientId("client"));
+			LOGGER.info("User: "+userDao.getUserByUserName("admin"));
+
 		};
 	}
 }
